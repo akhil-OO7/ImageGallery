@@ -8,7 +8,7 @@ function App() {
     <>
       <Header />
       <div className="container">
-        <Gallery />
+        {/* <Gallery /> */}
         {/* <SearchBar /> */}
       </div>
     </>
