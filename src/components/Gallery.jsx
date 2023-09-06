@@ -17,16 +17,16 @@ const Gallery = () => {
   };
   useEffect(() => {
     fetchImages();
-  }, [pics]);
+  }, []);
   return (
     <>
       <div className="card-list">
         {pics.map((pic) => (
           <div className="card" key={pic.id}>
             <img
-              className="card--image"
+              className="card-image"
               alt={pic.alt_description}
-              src={pic.urls.full}
+              src={pic.urls.small}
               width="50%"
               height="50%"
             ></img>

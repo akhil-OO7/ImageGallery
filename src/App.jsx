@@ -1,15 +1,17 @@
+import { useContext } from "react";
 import Gallery from "./components/Gallery";
 import Header from "./components/Header";
-import NavBar from "./components/NavBar";
-import SearchBar from "./components/SearchBar";
+import { StateContext } from "./context/StateContextProvider";
+import SearchResults from "./components/SearchResults";
 
 function App() {
+  const { pics } = useContext(StateContext);
   return (
     <>
       <Header />
       <div className="container">
-        {/* <Gallery /> */}
-        {/* <SearchBar /> */}
+        {/* <SearchResults /> */}
+        {pics.length !== 0 ? <SearchResults /> : <Gallery />}
       </div>
     </>
   );

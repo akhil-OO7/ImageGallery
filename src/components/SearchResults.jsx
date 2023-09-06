@@ -1,36 +1,28 @@
-import React from "react";
+import React, { useContext, useEffect, useRef } from "react";
+import { StateContext } from "../context/StateContextProvider";
 
 const SearchResults = () => {
-  const [query, setQuery] = useState("");
-  const [pics, setPics] = useState([]);
-  const searchPhotos = async (e) => {
-    e.preventDefault();
-    const response = await fetch(
-      `https://api.unsplash.com/search/photos?page=1&query=${query}&client_id=xvGMGxAFGKn5PG7DIOwAWXWkdZZZuOdRjDpOK7KP3cg`
-    );
-    const json = await response.json();
-    if (response.ok) {
-      setPics(json.results);
-    }
-    if (!response.ok) {
-      console.log(json.errors);
-    }
-  };
+  const { pics } = useContext(StateContext);
+  const result = useRef();
+  useEffect(() => {
+    result.current.scrollIntoView({ behavior: "smooth" });
+  }, [pics]);
 
   return (
     <>
-      <div className="card-list">
-        {pics.map((pic) => (
-          <div className="card" key={pic.id}>
-            <img
-              className="card--image"
-              alt={pic.alt_description}
-              src={pic.urls.full}
-              width="50%"
-              height="50%"
-            ></img>
-          </div>
-        ))}
+      <div className="card-list" ref={result}>
+        {pics &&
+          pics.map((pic) => (
+            <div className="card" key={pic.id}>
+              <img
+                className="card-image"
+                alt={pic.alt_description}
+                src={pic.urls.small}
+                width="50%"
+                height="50%"
+              ></img>
+            </div>
+          ))}
       </div>
     </>
   );

@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { StateContext } from "../context/StateContextProvider";
 
 const SearchBar = () => {
+  const { setPics } = useContext(StateContext);
   const [query, setQuery] = useState("");
-  const [pics, setPics] = useState([]);
   const searchPhotos = async (e) => {
     e.preventDefault();
     const response = await fetch(
@@ -11,6 +12,7 @@ const SearchBar = () => {
     const json = await response.json();
     if (response.ok) {
       setPics(json.results);
+      console.log(json.results);
     }
     if (!response.ok) {
       console.log(json.errors);
@@ -24,7 +26,7 @@ const SearchBar = () => {
           type="text"
           name="query"
           className="search-box"
-          placeholder="search image"
+          placeholder="Search Box"
           value={query}
           autoComplete="off"
           onChange={(e) => setQuery(e.target.value)}
@@ -33,19 +35,6 @@ const SearchBar = () => {
           Search
         </button>
       </form>
-      <div className="card-list">
-        {pics.map((pic) => (
-          <div className="card" key={pic.id}>
-            <img
-              className="card--image"
-              alt={pic.alt_description}
-              src={pic.urls.full}
-              width="50%"
-              height="50%"
-            ></img>
-          </div>
-        ))}
-      </div>
     </>
   );
 };
