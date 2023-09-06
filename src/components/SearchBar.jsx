@@ -1,22 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StateContext } from "../context/StateContextProvider";
+import { useImageSearch } from "../hooks/useImageSearch";
 
 const SearchBar = () => {
-  const { setPics } = useContext(StateContext);
-  const [query, setQuery] = useState("");
-  const searchPhotos = async (e) => {
+  const { query, setQuery, setPageNumber } = useContext(StateContext);
+  const searchPhotos = (e) => {
     e.preventDefault();
-    const response = await fetch(
-      `https://api.unsplash.com/search/photos?page=1&query=${query}&client_id=xvGMGxAFGKn5PG7DIOwAWXWkdZZZuOdRjDpOK7KP3cg`
-    );
-    const json = await response.json();
-    if (response.ok) {
-      setPics(json.results);
-      console.log(json.results);
-    }
-    if (!response.ok) {
-      console.log(json.errors);
-    }
+    setQuery(e.target[0].value);
+    query != e.target[0].value && setPageNumber(1);
   };
 
   return (
@@ -26,10 +17,8 @@ const SearchBar = () => {
           type="text"
           name="query"
           className="search-box"
-          placeholder="Search Box"
-          value={query}
+          placeholder="Search Image"
           autoComplete="off"
-          onChange={(e) => setQuery(e.target.value)}
         />
         <button className="search-btn" type="submit">
           Search

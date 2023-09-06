@@ -6,8 +6,6 @@ import { StateContextProvider } from "./context/StateContextProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <StateContextProvider>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <App />
   </StateContextProvider>
 );

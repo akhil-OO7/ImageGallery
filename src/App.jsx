@@ -5,13 +5,14 @@ import { StateContext } from "./context/StateContextProvider";
 import SearchResults from "./components/SearchResults";
 
 function App() {
-  const { pics } = useContext(StateContext);
+  const { query } = useContext(StateContext);
   return (
     <>
       <Header />
       <div className="container">
         {/* <SearchResults /> */}
-        {pics.length !== 0 ? <SearchResults /> : <Gallery />}
+
+        {query ? <SearchResults /> : <Gallery />}
       </div>
     </>
   );

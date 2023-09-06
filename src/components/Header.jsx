@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import SearchBar from "./SearchBar";
+import { StateContext } from "../context/StateContextProvider";
 
 const Header = () => {
+  const { setPageNumber, setQuery } = useContext(StateContext);
   return (
     <>
       <header className="header-section">
         <div className="header-content">
-          <h1 className="logo">Image Gallery</h1>
+          <h1
+            className="logo"
+            onClick={() => {
+              setQuery("");
+              setPageNumber(1);
+            }}
+          >
+            Image Gallery
+          </h1>
           <p className="subhead">
             The internet’s source for visuals. Powered by creators everywhere.
           </p>
