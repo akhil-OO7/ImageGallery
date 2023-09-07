@@ -9,6 +9,9 @@ export const StateContextProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(false);
   const [pageNumber, setPageNumber] = useState(1);
+  const [show, setShow] = useState(false);
+  const [scroll, setScroll] = useState(true);
+  const [data, setData] = useState({});
 
   return (
     <StateContext.Provider
@@ -25,6 +28,12 @@ export const StateContextProvider = ({ children }) => {
         setHasMore,
         pageNumber,
         setPageNumber,
+        show,
+        setShow,
+        scroll,
+        setScroll,
+        data,
+        setData,
       }}
     >
       {children}

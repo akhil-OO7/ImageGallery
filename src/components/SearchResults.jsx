@@ -1,11 +1,11 @@
 import { useImageSearch } from "../hooks/useImageSearch";
 import React, { useCallback, useContext, useEffect, useRef } from "react";
 import { StateContext } from "../context/StateContextProvider";
-import Loading from "./Loading";
+import Popup from "./Popup";
 
 const SearchResults = () => {
-  const { query } = useContext(StateContext);
-  const { pics, hasMore, setPageNumber } = useImageSearch();
+  const { query, setData, setShow, setScroll } = useContext(StateContext);
+  const { pics, hasMore, setPageNumber, loading } = useImageSearch();
 
   const observer = useRef();
   const lastImageElementRef = useCallback(
@@ -35,11 +35,21 @@ const SearchResults = () => {
 
   return (
     <>
+      <Popup />
       <div className="card-list" ref={result}>
         {pics.map((pic, idx) => {
           if (idx + 1 === pics.length) {
             return (
-              <div className="card" key={pic.id} ref={lastImageElementRef}>
+              <div
+                className="card"
+                key={pic.id}
+                ref={lastImageElementRef}
+                onClick={() => {
+                  setData(pic);
+                  setShow(true);
+                  setScroll(false);
+                }}
+              >
                 <img
                   className="card-image"
                   alt={pic.alt_description}
@@ -51,7 +61,15 @@ const SearchResults = () => {
             );
           }
           return (
-            <div className="card" key={pic.id}>
+            <div
+              className="card"
+              key={pic.id}
+              onClick={() => {
+                setData(pic);
+                setShow(true);
+                setScroll(false);
+              }}
+            >
               <img
                 className="card-image"
                 alt={pic.alt_description}

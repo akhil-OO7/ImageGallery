@@ -1,8 +1,12 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useContext, useRef } from "react";
 import { useImageSearch } from "../hooks/useImageSearch";
+import { StateContext } from "../context/StateContextProvider";
+import Popup from "./Popup";
 
 const Gallery = () => {
+  const { setShow, setData, setScroll } = useContext(StateContext);
   const { pics, hasMore, loading, error, setPageNumber } = useImageSearch();
+
   const observer = useRef();
   const lastImageElementRef = useCallback(
     (node) => {
@@ -23,11 +27,21 @@ const Gallery = () => {
 
   return (
     <>
+      <Popup />
       <div className="card-list">
         {pics.map((pic, idx) => {
           if (idx + 1 === pics.length) {
             return (
-              <div className="card" key={pic.id} ref={lastImageElementRef}>
+              <div
+                className="card"
+                key={pic.id}
+                ref={lastImageElementRef}
+                onClick={() => {
+                  setData(pic);
+                  setShow(true);
+                  setScroll(false);
+                }}
+              >
                 <img
                   className="card-image"
                   alt={pic.alt_description}
@@ -39,7 +53,15 @@ const Gallery = () => {
             );
           }
           return (
-            <div className="card" key={pic.id}>
+            <div
+              className="card"
+              key={pic.id}
+              onClick={() => {
+                setData(pic);
+                setShow(true);
+                setScroll(false);
+              }}
+            >
               <img
                 className="card-image"
                 alt={pic.alt_description}
